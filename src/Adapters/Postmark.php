@@ -27,7 +27,7 @@ class Postmark extends AbstractAdapter
         'Bounce'        => EmailEvent::EVENT_BOUNCED,
         'SpamComplaint' => EmailEvent::EVENT_COMPLAINED,
         'Open'          => EmailEvent::EVENT_OPENED,
-        'Click'         => EmailEvent::EVENT_CLICKED
+        'Click'         => EmailEvent::EVENT_CLICKED,
     ];
 
     /**
@@ -39,6 +39,14 @@ class Postmark extends AbstractAdapter
             return $this->eventMap[ Arr::get($this->payload, 'Type') ];
         }
 
+        // match an unsubscribe event
+        if (Arr::get($this->payload, 'RecordType') == "SubscriptionChange") {
+            if (Arr::get($this->payload, 'SuppressSending') === true) {
+                return EmailEvent::EVENT_UNSUBSCRIBE;
+            }
+            return false; // Ignore subscription changes that aren't unsubscribes
+        }
+
         return Arr::get($this->eventMap, Arr::get($this->payload, 'RecordType'));
     }
 
@@ -47,7 +55,8 @@ class Postmark extends AbstractAdapter
      */
     public function getRecipient()
     {
-        return Arr::get($this->payload, 'Recipient');
+
+        return Arr::get($this->payload, 'Recipient') ?: Arr::get($this->payload, 'Email');
 
     }
 
@@ -56,7 +65,7 @@ class Postmark extends AbstractAdapter
      */
     public function getTimestamp()
     {
-        foreach(["DeliveredAt","ReceivedAt","BouncedAt"] as $dateField) {
+        foreach(["DeliveredAt","ReceivedAt","BouncedAt","ChangedAt"] as $dateField) {
             if(Arr::has($this->payload, $dateField)) {
                 return strtotime($this->payload[$dateField]);
             }

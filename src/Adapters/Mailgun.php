@@ -28,7 +28,8 @@ class Mailgun extends AbstractAdapter
         'failed'     => EmailEvent::EVENT_BOUNCED,
         'complained' => EmailEvent::EVENT_COMPLAINED,
         'opened'     => EmailEvent::EVENT_OPENED,
-        'clicked'    => EmailEvent::EVENT_CLICKED
+        'clicked'    => EmailEvent::EVENT_CLICKED,
+        'unsubscribed' => EmailEvent::EVENT_UNSUBSCRIBE,
     ];
 
     public function __construct( $payload )

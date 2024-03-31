@@ -35,6 +35,7 @@ class EmailEvent
     const EVENT_COMPLAINED = "complained";
     const EVENT_OPENED = "opened";
     const EVENT_CLICKED = "clicked";
+    const EVENT_UNSUBSCRIBE = "unsubscribe";
 
     /**
      * @var AbstractAdapter

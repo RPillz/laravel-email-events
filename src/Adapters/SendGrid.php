@@ -29,7 +29,8 @@ class SendGrid extends AbstractAdapter
         'dropped'    => EmailEvent::EVENT_DROPPED,
         'spamreport' => EmailEvent::EVENT_COMPLAINED,
         'open'       => EmailEvent::EVENT_OPENED,
-        'click'      => EmailEvent::EVENT_CLICKED
+        'click'      => EmailEvent::EVENT_CLICKED,
+        'unsubscribe' => EmailEvent::EVENT_UNSUBSCRIBE,
     ];
 
     /**

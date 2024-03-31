@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'url' => env('MAIL_EVENTS_URL', '.hooks/email-events'),
+    'url' => env('MAIL_EVENTS_URL', 'hooks/email-events'),
 
     'token' => env('MAIL_EVENTS_AUTH_TOKEN'),
     'token_parameter' => env('MAIL_EVENTS_AUTH_TOKEN_PARAM', 'auth'),
